@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Registration {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  phone String
+  location String
+  course String 
+  dataOfBirth DateTime
+  amount Int // stored in KOBO (naira * 100), derived server-side 
+  status String @default("pending")
+  reference String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([course])
+} 
+
+
+model Payment {
+  id String @default(uuid())
+  registrationId String @unique
+  reference String @unique
+  status String @default("pending")
+  channel String? 
+  rawPayload Json?
+  paidAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  registration Registration @relation(fields:[registrationId], references: [id])
+
+@@index([status])
+}
