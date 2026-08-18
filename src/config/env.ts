@@ -11,6 +11,7 @@ export const required = (key: string) => {
 
 export const env = {
   port: Number(process.env.PORT),
+  node_env:required("NODE_ENV"),
   databaseUrl: required('DATABASE_URL'),
   paystackSecretKey: required('PAYSTACK_SECRET_KEY'),
   paystackPublicKey: required('PAYSTACK_PUBLIC_KEY'),
