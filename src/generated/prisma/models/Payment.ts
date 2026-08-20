@@ -426,14 +426,6 @@ export type PaymentUncheckedUpdateOneWithoutRegistrationNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentUpdateToOneWithWhereWithoutRegistrationInput, Prisma.PaymentUpdateWithoutRegistrationInput>, Prisma.PaymentUncheckedUpdateWithoutRegistrationInput>
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type PaymentCreateWithoutRegistrationInput = {
   id?: string
   reference: string

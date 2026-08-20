@@ -12,6 +12,18 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  passwordHash        String
+  role                String    @default("admin")
+  resetTokenHash      String? // SHA-256 hash of the token — never the raw token
+  resetTokenExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+
+  @@index([email])
+}
+
 model Registration {
   id String @id @default(uuid())
   name String
@@ -19,7 +31,7 @@ model Registration {
   phone String
   location String
   course String 
-  dataOfBirth DateTime
+  dateOfBirth DateTime
   amount Int // stored in KOBO (naira * 100), derived server-side 
   status String @default("pending")
   reference String @unique

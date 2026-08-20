@@ -1,15 +1,21 @@
 import z from 'zod'
 
-export const LOCATIONS = ['Island', 'Mainland']
-export const COURSES = ['Web Development', 'Cybersecurity', 'AI and Machine Learning'] as const
+export const LOCATIONS = ['island', 'mainland']
+export const COURSES = ['web development', 'cybersecurity', 'ai and machine learning'] as const
 
 export const registrationValidator = z.object({
   name: z.string().min(2, {
     error: 'Name must be at least two characters',
   }),
-  email: z.email({
-    error: 'Invalid email address',
-  }),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .pipe(
+      z.email({
+        error: 'Invalid email address',
+      }),
+    ),
   phone: z
     .string()
     .min(10, {

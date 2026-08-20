@@ -10,12 +10,26 @@ export const required = (key: string) => {
 }
 
 export const env = {
-  port: Number(process.env.PORT),
-  node_env:required("NODE_ENV"),
+  port: Number(required('PORT')),
+  node_env: required('NODE_ENV'),
   databaseUrl: required('DATABASE_URL'),
   paystackSecretKey: required('PAYSTACK_SECRET_KEY'),
   paystackPublicKey: required('PAYSTACK_PUBLIC_KEY'),
   coursePriceNaira: {
-    // "Web Development": Number(process.env.)
+    'web development': Number(required('PRICE_WEB_DEVELOPMENT')),
+    cybersecurity: Number(required('PRICE_CYBERSECURITY')),
+    'ai and machine learning': Number(required('PRICE_AI_AND_MACHINE_LEARNING')),
+  } as Record<string, number>,
+  jwt: {
+    secret: required('JWT_SECRET'),
+    expiresIn: '10h',
+  },
+  isProduction: process.env.NODE_ENV === 'production',
+  frontendUrl: process.env.FRONTEND_URL ?? 'http://localhost:3000',
+}
+
+for (const [course, price] of Object.entries(env.coursePriceNaira)) {
+  if (!price || price <= 0) {
+    throw new Error(`Missing/Invalid price for course ${course}`)
   }
 }

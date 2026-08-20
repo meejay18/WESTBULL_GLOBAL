@@ -4,17 +4,23 @@ import cors from 'cors'
 import { logger } from './utils/logger'
 import { httpLogger } from './utils/logger/http'
 import helmet from 'helmet'
+import registrationRoutes from './routes/registration.route'
+import { env } from './config/env'
+import { Prisma } from './generated/prisma/client'
 
 export const app = express()
 
 app.use(helmet())
 app.use(
   cors({
-    origin: '*',
+    origin: env.frontendUrl,
   }),
 )
 app.use(httpLogger)
 app.use(express.json())
+
+app.use(registrationRoutes)
+
 app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({
     message: 'OK',
@@ -22,9 +28,15 @@ app.get('/health', (_req: Request, res: Response) => {
   })
 })
 
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   logger.error(err, 'Unhandled Error')
-  res.status(500).json({
-    error: 'Internal server Error',
+  if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
+    return res.status(409).json({
+      error: 'A registration with this email already exists',
+    })
+  }
+
+  return res.status(500).json({
+    error: 'Internal server error',
   })
 })
