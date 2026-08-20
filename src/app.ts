@@ -9,6 +9,7 @@ import { env } from './config/env'
 import { Prisma } from './generated/prisma/client'
 
 export const app = express()
+app.set('trust proxy', 1)
 
 app.use(helmet())
 app.use(
