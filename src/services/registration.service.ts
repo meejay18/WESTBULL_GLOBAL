@@ -9,9 +9,9 @@ const generateReference = () => {
   return `WB-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`
 }
 
-const generatePaymentReference = () => {
-  return `PAY-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`
-}
+// const generatePaymentReference = () => {
+//   return `PAY-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`
+// }
 
 export const createRegistration = async (input: CreateRegistrationDto) => {
   const reference = generateReference()
