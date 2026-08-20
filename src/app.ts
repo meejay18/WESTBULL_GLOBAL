@@ -45,3 +45,14 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
     debugCode: (err as any)?.code, // Prisma errors have a `code` like 'P2002'
   })
 })
+
+process.on('unhandledRejection', (reason) => {
+  logger.error(reason, 'Unhandled Rejection')
+})
+
+process.on('uncaughtException', (err) => {
+  logger.error(err, 'Uncaught Exception - shutting down')
+  // Give the logger a moment to flush, then exit.
+  // Your process manager should restart the app.
+  process.exit(1)
+})
