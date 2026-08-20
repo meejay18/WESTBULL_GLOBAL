@@ -29,6 +29,9 @@ app.get('/health', (_req: Request, res: Response) => {
 })
 
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  console.error('========== GLOBAL ERROR ==========')
+  console.error(err)
+  console.error('==================================')
   logger.error(err, 'Unhandled Error')
   if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
     return res.status(409).json({
@@ -38,5 +41,7 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
 
   return res.status(500).json({
     error: 'Internal server error',
+    debugMessage: err instanceof Error ? err.message : String(err),
+    debugCode: (err as any)?.code, // Prisma errors have a `code` like 'P2002'
   })
 })

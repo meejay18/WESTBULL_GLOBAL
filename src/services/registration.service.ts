@@ -14,11 +14,14 @@ const generateReference = () => {
 // }
 
 export const createRegistration = async (input: CreateRegistrationDto) => {
+   console.log('CREATE REGISTRATION STARTED')
   const reference = generateReference()
 
   const priceNaira = env.coursePriceNaira[input.course]
   const amountInKobo = priceNaira * 100
 
+
+  console.log('ABOUT TO INSERT INTO DATABASE')
   const registration = await prisma.registration.create({
     data: {
       name: input.name,
