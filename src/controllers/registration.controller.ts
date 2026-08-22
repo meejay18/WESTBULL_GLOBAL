@@ -7,8 +7,9 @@ export const registrationController = async (req: Request, res: Response, next: 
     const registration = await createRegistration(req.body)
 
     return res.status(201).json({
-      message: 'Registration created',
-      registrationId: registration.id,
+      status: true,
+      message: 'Registration created successfully',
+      data: registration,
     })
   } catch (error) {
     logger.error(error, 'Registration Failed')

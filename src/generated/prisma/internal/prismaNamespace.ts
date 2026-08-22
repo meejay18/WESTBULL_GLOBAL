@@ -703,7 +703,6 @@ export const RegistrationScalarFieldEnum = {
   dateOfBirth: 'dateOfBirth',
   amount: 'amount',
   status: 'status',
-  reference: 'reference',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

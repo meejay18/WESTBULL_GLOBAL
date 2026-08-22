@@ -36,7 +36,6 @@ model Registration {
   dateOfBirth DateTime
   amount Int // stored in KOBO (naira * 100), derived server-side 
   status String @default("pending")
-  reference String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -49,7 +48,7 @@ model Registration {
 
 
 model Payment {
-  id String @default(uuid())
+  id String @id @default(uuid())
   registrationId String @unique
   reference String @unique
   status String @default("pending")

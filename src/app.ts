@@ -7,6 +7,7 @@ import helmet from 'helmet'
 import registrationRoutes from './routes/registration.route'
 import { env } from './config/env'
 import { Prisma } from './generated/prisma/client'
+import webhookRoute from './routes/webhook.routes'
 
 export const app = express()
 app.set('trust proxy', 1)
@@ -17,6 +18,8 @@ app.use(
     origin: env.frontendUrl,
   }),
 )
+
+app.use('/paystackWebhook', webhookRoute)
 app.use(httpLogger)
 app.use(express.json())
 
@@ -30,10 +33,6 @@ app.get('/health', (_req: Request, res: Response) => {
 })
 
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-  console.error('========== GLOBAL ERROR ==========')
-  console.error(err)
-  console.error('==================================')
-  logger.error(err, 'Unhandled Error')
   if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
     return res.status(409).json({
       error: 'A registration with this email already exists',

@@ -44,7 +44,6 @@ export type RegistrationMinAggregateOutputType = {
   dateOfBirth: Date | null
   amount: number | null
   status: string | null
-  reference: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,7 +58,6 @@ export type RegistrationMaxAggregateOutputType = {
   dateOfBirth: Date | null
   amount: number | null
   status: string | null
-  reference: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -74,7 +72,6 @@ export type RegistrationCountAggregateOutputType = {
   dateOfBirth: number
   amount: number
   status: number
-  reference: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -99,7 +96,6 @@ export type RegistrationMinAggregateInputType = {
   dateOfBirth?: true
   amount?: true
   status?: true
-  reference?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,7 +110,6 @@ export type RegistrationMaxAggregateInputType = {
   dateOfBirth?: true
   amount?: true
   status?: true
-  reference?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -129,7 +124,6 @@ export type RegistrationCountAggregateInputType = {
   dateOfBirth?: true
   amount?: true
   status?: true
-  reference?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -231,7 +225,6 @@ export type RegistrationGroupByOutputType = {
   dateOfBirth: Date
   amount: number
   status: string
-  reference: string
   createdAt: Date
   updatedAt: Date
   _count: RegistrationCountAggregateOutputType | null
@@ -269,7 +262,6 @@ export type RegistrationWhereInput = {
   dateOfBirth?: Prisma.DateTimeFilter<"Registration"> | Date | string
   amount?: Prisma.IntFilter<"Registration"> | number
   status?: Prisma.StringFilter<"Registration"> | string
-  reference?: Prisma.StringFilter<"Registration"> | string
   createdAt?: Prisma.DateTimeFilter<"Registration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Registration"> | Date | string
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
@@ -285,7 +277,6 @@ export type RegistrationOrderByWithRelationInput = {
   dateOfBirth?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   payment?: Prisma.PaymentOrderByWithRelationInput
@@ -294,7 +285,6 @@ export type RegistrationOrderByWithRelationInput = {
 export type RegistrationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
-  reference?: string
   AND?: Prisma.RegistrationWhereInput | Prisma.RegistrationWhereInput[]
   OR?: Prisma.RegistrationWhereInput[]
   NOT?: Prisma.RegistrationWhereInput | Prisma.RegistrationWhereInput[]
@@ -308,7 +298,7 @@ export type RegistrationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Registration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Registration"> | Date | string
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
-}, "id" | "email" | "reference">
+}, "id" | "email">
 
 export type RegistrationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -320,7 +310,6 @@ export type RegistrationOrderByWithAggregationInput = {
   dateOfBirth?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RegistrationCountOrderByAggregateInput
@@ -343,7 +332,6 @@ export type RegistrationScalarWhereWithAggregatesInput = {
   dateOfBirth?: Prisma.DateTimeWithAggregatesFilter<"Registration"> | Date | string
   amount?: Prisma.IntWithAggregatesFilter<"Registration"> | number
   status?: Prisma.StringWithAggregatesFilter<"Registration"> | string
-  reference?: Prisma.StringWithAggregatesFilter<"Registration"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Registration"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Registration"> | Date | string
 }
@@ -358,7 +346,6 @@ export type RegistrationCreateInput = {
   dateOfBirth: Date | string
   amount: number
   status?: string
-  reference: string
   createdAt?: Date | string
   updatedAt?: Date | string
   payment?: Prisma.PaymentCreateNestedOneWithoutRegistrationInput
@@ -374,7 +361,6 @@ export type RegistrationUncheckedCreateInput = {
   dateOfBirth: Date | string
   amount: number
   status?: string
-  reference: string
   createdAt?: Date | string
   updatedAt?: Date | string
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutRegistrationInput
@@ -390,7 +376,6 @@ export type RegistrationUpdateInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payment?: Prisma.PaymentUpdateOneWithoutRegistrationNestedInput
@@ -406,7 +391,6 @@ export type RegistrationUncheckedUpdateInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutRegistrationNestedInput
@@ -422,7 +406,6 @@ export type RegistrationCreateManyInput = {
   dateOfBirth: Date | string
   amount: number
   status?: string
-  reference: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -437,7 +420,6 @@ export type RegistrationUpdateManyMutationInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -452,7 +434,6 @@ export type RegistrationUncheckedUpdateManyInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -467,7 +448,6 @@ export type RegistrationCountOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -486,7 +466,6 @@ export type RegistrationMaxOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -501,7 +480,6 @@ export type RegistrationMinOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -547,7 +525,6 @@ export type RegistrationCreateWithoutPaymentInput = {
   dateOfBirth: Date | string
   amount: number
   status?: string
-  reference: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -562,7 +539,6 @@ export type RegistrationUncheckedCreateWithoutPaymentInput = {
   dateOfBirth: Date | string
   amount: number
   status?: string
-  reference: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -593,7 +569,6 @@ export type RegistrationUpdateWithoutPaymentInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -608,7 +583,6 @@ export type RegistrationUncheckedUpdateWithoutPaymentInput = {
   dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -625,7 +599,6 @@ export type RegistrationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   dateOfBirth?: boolean
   amount?: boolean
   status?: boolean
-  reference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   payment?: boolean | Prisma.Registration$paymentArgs<ExtArgs>
@@ -641,7 +614,6 @@ export type RegistrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   dateOfBirth?: boolean
   amount?: boolean
   status?: boolean
-  reference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["registration"]>
@@ -656,7 +628,6 @@ export type RegistrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   dateOfBirth?: boolean
   amount?: boolean
   status?: boolean
-  reference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["registration"]>
@@ -671,12 +642,11 @@ export type RegistrationSelectScalar = {
   dateOfBirth?: boolean
   amount?: boolean
   status?: boolean
-  reference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "location" | "course" | "dateOfBirth" | "amount" | "status" | "reference" | "createdAt" | "updatedAt", ExtArgs["result"]["registration"]>
+export type RegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "location" | "course" | "dateOfBirth" | "amount" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["registration"]>
 export type RegistrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   payment?: boolean | Prisma.Registration$paymentArgs<ExtArgs>
 }
@@ -698,7 +668,6 @@ export type $RegistrationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     dateOfBirth: Date
     amount: number
     status: string
-    reference: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["registration"]>
@@ -1134,7 +1103,6 @@ export interface RegistrationFieldRefs {
   readonly dateOfBirth: Prisma.FieldRef<"Registration", 'DateTime'>
   readonly amount: Prisma.FieldRef<"Registration", 'Int'>
   readonly status: Prisma.FieldRef<"Registration", 'String'>
-  readonly reference: Prisma.FieldRef<"Registration", 'String'>
   readonly createdAt: Prisma.FieldRef<"Registration", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Registration", 'DateTime'>
 }

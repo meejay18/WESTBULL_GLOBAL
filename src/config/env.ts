@@ -26,6 +26,9 @@ export const env = {
   },
   isProduction: process.env.NODE_ENV === 'production',
   frontendUrl: process.env.FRONTEND_URL ?? 'http://localhost:3000',
+  brevoApiKey: required('BREVO_API_KEY'),
+  emailFrom: required('EMAIL_FROM'),
+  emailFromName: required('EMAIL_FROM_NAME'),
 }
 
 for (const [course, price] of Object.entries(env.coursePriceNaira)) {
