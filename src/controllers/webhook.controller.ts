@@ -55,6 +55,8 @@ export const paystackWebhookController = async (req: Request, res: Response): Pr
       status: false,
       message: 'Invalid signature',
     })
+
+    return
   }
 
   let event: PaystackChargeSuccessEvent
@@ -71,17 +73,24 @@ export const paystackWebhookController = async (req: Request, res: Response): Pr
     return
   }
 
-  // Acknowledge Paystack quickly.
-  // Paystack retries webhook deliveries when it doesn't receive a 200 response.
-  res.status(200).json({
-    status: true,
-    message: 'Webhook received',
-  })
-
   try {
     await handlePaystackEvent(event)
+
+    // Only tell Paystack everything is okay
+    // after our processing succeeds.
+    res.status(200).json({
+      status: true,
+      message: 'Webhook processed successfully',
+    })
   } catch (error) {
     logger.error(error, 'Failed to process Paystack webhook event')
+
+    // Important:
+    // Paystack will retry because it did not receive 200.
+    res.status(500).json({
+      status: false,
+      message: 'Webhook processing failed',
+    })
   }
 }
 

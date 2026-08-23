@@ -6,6 +6,7 @@ type InitializeTransactionInput = {
   email: string
   amountInKobo: number
   reference: string
+  callback_url?: string
   metadata?: Record<string, unknown>
 }
 
@@ -65,6 +66,7 @@ export const paystack = {
         email: input.email,
         amount: input.amountInKobo,
         reference: input.reference,
+        callback_url: input.callback_url,
         metadata: input.metadata,
       }),
     }),

@@ -29,6 +29,7 @@ export const env = {
   brevoApiKey: required('BREVO_API_KEY'),
   emailFrom: required('EMAIL_FROM'),
   emailFromName: required('EMAIL_FROM_NAME'),
+  frontendPaymentCallbackUrl:required("FRONTEND_PAYMENT_CALLBACK_URL")
 }
 
 for (const [course, price] of Object.entries(env.coursePriceNaira)) {

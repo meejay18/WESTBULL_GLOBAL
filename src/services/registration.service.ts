@@ -77,6 +77,7 @@ export const createRegistration = async (input: CreateRegistrationDto) => {
       email: input.email,
       amountInKobo,
       reference,
+      callback_url: env.frontendPaymentCallbackUrl,
       metadata: {
         registrationId: registration.id,
         course: input.course,
@@ -128,6 +129,7 @@ export const reinitiatePayment = async (existing: {
       email: existing.email,
       amountInKobo: existing.amount,
       reference: newReference,
+      callback_url: env.frontendPaymentCallbackUrl,
       metadata: { registrationId: existing.id, course: existing.course },
     })
 
