@@ -9,13 +9,15 @@ import { env } from './config/env'
 import { Prisma } from './generated/prisma/client'
 import webhookRoute from './routes/webhook.routes'
 
+const allowedOrigins = [env.frontendUrl, 'http://localhost:3000']
+
 export const app = express()
 app.set('trust proxy', 1)
 
 app.use(helmet())
 app.use(
   cors({
-    origin: env.frontendUrl,
+    origin: allowedOrigins,
   }),
 )
 
