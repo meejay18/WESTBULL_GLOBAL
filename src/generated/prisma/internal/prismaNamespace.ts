@@ -702,6 +702,7 @@ export const RegistrationScalarFieldEnum = {
   course: 'course',
   dateOfBirth: 'dateOfBirth',
   amount: 'amount',
+  emailSentAt: 'emailSentAt',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

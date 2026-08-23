@@ -4,12 +4,14 @@ import { logger } from '../utils/logger'
 
 export const registrationController = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const registration = await createRegistration(req.body)
+    const result = await createRegistration(req.body)
 
     return res.status(201).json({
       status: true,
-      message: 'Registration created successfully',
-      data: registration,
+      message: result.isNewRegistration
+        ? 'Registration created successfully'
+        : 'Existing registration found, Payment reinitiated successfully',
+      data: result,
     })
   } catch (error) {
     logger.error(error, 'Registration Failed')

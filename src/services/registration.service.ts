@@ -11,10 +11,6 @@ const generateReference = () => {
   return `WB-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`
 }
 
-// const generatePaymentReference = () => {
-//   return `PAY-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`
-// }
-
 export const createRegistration = async (input: CreateRegistrationDto) => {
   // Idempotency: has this email already started (or completed) registration for this course?
 
@@ -38,7 +34,12 @@ export const createRegistration = async (input: CreateRegistrationDto) => {
 
     // The registration exists but payment is still pending.
     // Re-use the existing registration and payment reference.
-    return reinitiatePayment(existing)
+    const result = await reinitiatePayment(existing)
+
+    return {
+      ...result,
+      isNewRegistration: false,
+    }
   }
 
   // Make sure the requested course exists and get its price
@@ -82,7 +83,12 @@ export const createRegistration = async (input: CreateRegistrationDto) => {
       },
     })
 
-    return { registration, authorizationUrl: paystackResponse.data.authorization_url }
+    return {
+      registration,
+      payment: registration.payment,
+      authorizationUrl: paystackResponse.data.authorization_url,
+      isNewRegistration: true,
+    }
   } catch (error) {
     logger.error(error, 'Paystack initialize failed after registration created')
     throw new AppError('Could not initiate payment, please try again', 502)
