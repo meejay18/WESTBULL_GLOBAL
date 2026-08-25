@@ -138,7 +138,7 @@ export const generateAdmissionLetter = (data: AdmissionLetterInput): Promise<Buf
 
     doc.text('Lecture Commencement Date: 14 September 2026')
 
-    doc.text('Program: Tech Skill Empowerment Program')
+    doc.text('Program: Tech Skill Acquisition')
 
     doc.text(`Selected Course: ${data.course}`)
 
