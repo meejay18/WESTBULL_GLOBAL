@@ -10,9 +10,14 @@ export type SendEmailInput = {
   to: string
   subject: string
   html: string
+
+  attachment?: {
+    name: string
+    content: Buffer
+  }
 }
 
-export const brevoEmailService = async ({ to, subject, html }: SendEmailInput) => {
+export const brevoEmailService = async ({ to, subject, html, attachment }: SendEmailInput) => {
   try {
     const response = await brevo.transactionalEmails.sendTransacEmail({
       sender: {
@@ -26,6 +31,17 @@ export const brevoEmailService = async ({ to, subject, html }: SendEmailInput) =
       ],
       subject,
       htmlContent: html,
+
+      ...(attachment
+        ? {
+            attachment: [
+              {
+                name: attachment.name,
+                content: attachment.content.toString('base64'),
+              },
+            ],
+          }
+        : {}),
     })
 
     logger.info(

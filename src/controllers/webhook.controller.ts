@@ -4,6 +4,9 @@ import crypto from 'crypto'
 import { env } from '../config/env'
 import { prisma } from '../config/prisma'
 import { Prisma } from '../generated/prisma/client'
+import { generateAdmissionLetter } from '../services/admission-letter-service'
+import { registrationSuccessTemplate } from '../services/registrationTemplate'
+import { brevoEmailService } from '../services/brevo.service'
 
 interface PaystackChargeSuccessEvent {
   event: string
@@ -181,6 +184,50 @@ export const handlePaystackEvent = async (event: PaystackChargeSuccessEvent): Pr
       },
     })
   })
+
+  if (status !== 'success') {
+    return
+  }
+
+  try {
+    const admissionLetter = await generateAdmissionLetter({
+      name: registration.name,
+      course: registration.course,
+      admissionDate: new Date(),
+    })
+
+    const html = registrationSuccessTemplate({
+      name: registration.name,
+      course: registration.course,
+      amount: registration.amount,
+    })
+
+    await brevoEmailService({
+      to: registration.email,
+      subject: 'WestBull Global - Admission Confirmation',
+      html,
+      attachment: {
+        name: 'WestBull-Global-Admission-Letter.pdf',
+        content: admissionLetter,
+      },
+    })
+
+    logger.info(
+      {
+        registrationId: registration.id,
+        email: registration.email,
+      },
+      'Admission letter email sent successfully',
+    )
+  } catch (error) {
+    logger.error(
+      {
+        error,
+        registrationId: registration.id,
+      },
+      'Payment succeeded but admission email failed',
+    )
+  }
 
   logger.info({ reference, registrationId: registration.id }, 'Paystack payment processed successfully')
 }
