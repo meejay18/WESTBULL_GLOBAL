@@ -10,11 +10,10 @@ export const startServer = async () => {
     logger.info("Database connected successfully");
 
     app.listen(env.port, "0.0.0.0", () => {
-      logger.info(`App started on port ${env.port}`);
-      logger.info(`Health check: http://localhost:${env.port}/health`);
       logger.info(
-        `Webhook path to register on Paystack dashboard: /webhooks/paystack`,
-      );
+    { port: env.port, environment: env.node_env },
+    'Application started',
+  )
     });
   } catch (error) {
     logger.error(error, "Failed to connect to database");

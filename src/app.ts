@@ -21,8 +21,8 @@ app.use(
   }),
 )
 
-app.use('/paystackWebhook', webhookRoute)
 app.use(httpLogger)
+app.use('/paystackWebhook', webhookRoute)
 app.use(express.json())
 
 app.use(registrationRoutes)

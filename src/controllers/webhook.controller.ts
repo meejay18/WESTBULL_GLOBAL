@@ -7,6 +7,7 @@ import { Prisma } from '../generated/prisma/client'
 import { generateAdmissionLetter } from '../services/admission-letter-service'
 import { registrationSuccessTemplate } from '../services/registrationTemplate'
 import { brevoEmailService } from '../services/brevo.service'
+import { AppError } from '../utils/appError'
 
 interface PaystackChargeSuccessEvent {
   event: string
@@ -22,6 +23,7 @@ interface PaystackChargeSuccessEvent {
 }
 
 export const paystackWebhookController = async (req: Request, res: Response): Promise<void> => {
+  logger.info('🔥 PAYSTACK WEBHOOK HIT')
   const signature = req.headers['x-paystack-signature']
 
   if (!signature || typeof signature !== 'string') {
@@ -117,9 +119,11 @@ export const handlePaystackEvent = async (event: PaystackChargeSuccessEvent): Pr
   })
 
   if (!payment) {
-    logger.warn({ reference }, 'Received Paystack webhook for unknown payment')
+    if (!payment) {
+      logger.error({ reference }, 'Received Paystack webhook for unknown payment')
 
-    return
+      throw new AppError('Payment reference not found', 500)
+    }
   }
 
   // Idempotency:
