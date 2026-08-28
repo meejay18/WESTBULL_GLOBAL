@@ -60,7 +60,7 @@ model Payment {
   updatedAt DateTime @updatedAt
 
 
-  registration Registration @relation(fields:[registrationId], references: [id])
+  registration Registration @relation(fields:[registrationId], references: [id], onDelete: Cascade)
 
 @@index([status])
 }
