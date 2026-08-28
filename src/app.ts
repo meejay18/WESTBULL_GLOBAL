@@ -8,6 +8,7 @@ import registrationRoutes from './routes/registration.route'
 import { env } from './config/env'
 import { Prisma } from './generated/prisma/client'
 import webhookRoute from './routes/webhook.routes'
+import { AppError } from './utils/appError'
 
 const allowedOrigins = [env.frontendUrl, 'http://localhost:3000']
 
@@ -35,16 +36,22 @@ app.get('/health', (_req: Request, res: Response) => {
 })
 
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      status: false,
+      error: err.message,
+    })
+  }
+
   if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
     return res.status(409).json({
       error: 'A registration with this email already exists',
     })
   }
-
+  logger.error(err, 'Unhandled Error')
   return res.status(500).json({
+    status: false,
     error: 'Internal server error',
-    debugMessage: err instanceof Error ? err.message : String(err),
-    debugCode: (err as any)?.code, // Prisma errors have a `code` like 'P2002'
   })
 })
 
